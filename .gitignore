@@ -1,0 +1,18 @@
+.env
+.env.local
+*.local
+.DS_Store
+node_modules/
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# Never commit machine-local Hermes/Claude state
+*.lock
+*.pid
+*.db
+*.db-shm
+*.db-wal
+*.bak
+*.bak.*
