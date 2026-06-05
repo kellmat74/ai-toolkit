@@ -8,6 +8,21 @@ Senior engineer at VisiQuate. Healthcare RCM domain. I work across data, infra, 
 agentic tooling. I use Claude Code and Hermes as parallel agents - Claude Code for
 synchronous in-IDE work, Hermes for async/scheduled work.
 
+## My Claude Code surface
+**Primary: the Claude Code Mac app (GUI), not the CLI terminal.**
+When giving me instructions, default to GUI-flavored guidance:
+- "Start a new session" means File menu / Cmd+N / `+` button, not `claude` in a terminal
+- "Switch projects" means picking a different working directory in the app, not `cd`
+- Multiple parallel sessions are normal (one per tab/window)
+- Push notifications work and are enabled (`agentPushNotifEnabled: true`)
+
+I may also have a remote session accessible from the iOS/Android Claude app for
+on-the-go work. Treat that as a secondary surface for review/comments/light prompts,
+not for heavy tool-driven work.
+
+Underlying mechanics (cwd, project CLAUDE.md, `~/.claude/`, symlinks from
+ai-toolkit) are identical to CLI. Only the UI differs.
+
 ## Memory and notes
 Long-form notes live in my personal Obsidian vault:
 `~/Library/CloudStorage/GoogleDrive-kellmat74@gmail.com/My Drive/Obsidian-Personal/Obsidian Vault/`
