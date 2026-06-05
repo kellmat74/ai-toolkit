@@ -16,9 +16,11 @@ When giving me instructions, default to GUI-flavored guidance:
 - Multiple parallel sessions are normal (one per tab/window)
 - Push notifications work and are enabled (`agentPushNotifEnabled: true`)
 
-I may also have a remote session accessible from the iOS/Android Claude app for
-on-the-go work. Treat that as a secondary surface for review/comments/light prompts,
-not for heavy tool-driven work.
+Remote Control is enabled by default, so every session is also reachable from the
+iOS/Android Claude app for on-the-go work. Treat the mobile surface as secondary:
+good for review, comments, light prompts, and filing backlog tickets; not for
+heavy tool-driven work. The Mac has to stay awake for the remote session to stay
+live (10-minute network outage timeout).
 
 Underlying mechanics (cwd, project CLAUDE.md, `~/.claude/`, symlinks from
 ai-toolkit) are identical to CLI. Only the UI differs.
