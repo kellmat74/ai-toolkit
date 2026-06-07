@@ -1,0 +1,92 @@
+direction: right
+
+matt: Matt Kelley {
+  shape: person
+  style.fill: "#ECECFF"
+}
+
+agents: Agent Platform {
+  claude: Claude Code {
+    style.fill: "#dbeafe"
+    tooltip: "Sync · MCP-native · Mac App + iOS Remote Control"
+  }
+  hermes: Hermes {
+    style.fill: "#dcfce7"
+    tooltip: "Async · Self-hosted · Full shell access · No MCP"
+  }
+}
+
+coord: Coordination Layer {
+  backlog: agent-backlog {
+    shape: cylinder
+    style.fill: "#fef9c3"
+    tooltip: "GitHub Issues · label-based routing\nagent:{claude,hermes,any}\nstatus:{ready,in-progress,blocked}\nscope:{ai-toolkit,work,personal}\npriority:{p0,p1,p2}"
+  }
+  vault: Obsidian Vault {
+    shape: cylinder
+    style.fill: "#fef9c3"
+    tooltip: "Local filesystem · durable knowledge · both agents read/write"
+  }
+}
+
+claude_tools: Claude Tools (MCP) {
+  style.fill: "#eff6ff"
+  gh_mcp: GitHub MCP
+  lucid: Lucid MCP
+  google: Google Workspace MCP
+  slack: Slack MCP
+}
+
+hermes_tools: Hermes Tools {
+  style.fill: "#f0fdf4"
+  skills: Skills Library {
+    tooltip: "SKILL.md format · backlog-protocol · github-issues · 40+ built-ins"
+  }
+  gh_cli: gh CLI {
+    tooltip: "System keyring auth · no token file"
+  }
+  cron: Cron Scheduler
+  browser: Browser Control
+}
+
+external: External Services {
+  anthropic: Anthropic API {
+    tooltip: "claude-sonnet-4-6"
+  }
+  openrouter: OpenRouter {
+    tooltip: "Hermes-3 / nemotron"
+  }
+  github: GitHub {
+    tooltip: "kellmat74/ai-toolkit · kellmat74/agent-backlog"
+  }
+  pages: GitHub Pages {
+    tooltip: "kellmat74.github.io/ai-toolkit · artifact hosting"
+  }
+}
+
+matt -> agents.claude: "Mac App\niOS Remote"
+matt -> agents.hermes: "Telegram\nSlack · CLI"
+
+agents.claude -> coord.backlog: "GitHub MCP"
+agents.hermes -> coord.backlog: "gh CLI"
+agents.claude -> coord.vault: "filesystem"
+agents.hermes -> coord.vault: "filesystem"
+
+agents.claude -> claude_tools.gh_mcp
+agents.claude -> claude_tools.lucid
+agents.claude -> claude_tools.google
+agents.claude -> claude_tools.slack
+
+agents.hermes -> hermes_tools.skills
+agents.hermes -> hermes_tools.gh_cli
+agents.hermes -> hermes_tools.cron
+agents.hermes -> hermes_tools.browser
+
+agents.claude -> external.anthropic
+agents.hermes -> external.openrouter
+
+claude_tools.gh_mcp -> external.github
+hermes_tools.gh_cli -> external.github
+
+agents.claude -> external.pages: "git push\ngh-pages"
+agents.hermes -> external.pages: "git push\ngh-pages"
