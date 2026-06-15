@@ -11,6 +11,7 @@ fallback_providers: []
 credential_pool_strategies: {}
 toolsets:
 - hermes-cli
+max_concurrent_sessions: null
 agent:
   max_turns: 150
   gateway_timeout: 1800
@@ -21,6 +22,7 @@ agent:
   task_completion_guidance: true
   environment_probe: true
   environment_hint: ''
+  coding_context: auto
   gateway_timeout_warning: 900
   clarify_timeout: 600
   gateway_notify_interval: 180
@@ -150,6 +152,7 @@ compression:
   hygiene_hard_message_limit: 400
   protect_first_n: 3
   abort_on_summary_failure: false
+  codex_gpt55_autoraise: true
 prompt_caching:
   cache_ttl: 5m
 openrouter:
@@ -212,6 +215,13 @@ auxiliary:
     timeout: 30
     extra_body: {}
   title_generation:
+    provider: auto
+    model: ''
+    base_url: ''
+    api_key: ''
+    timeout: 30
+    extra_body: {}
+  tts_audio_tags:
     provider: auto
     model: ''
     base_url: ''
@@ -286,8 +296,9 @@ display:
       streaming: true
     discord:
       streaming: false
+      show_reasoning: true
   runtime_footer:
-    enabled: false
+    enabled: true
     fields:
     - model
     - context_pct
@@ -299,12 +310,19 @@ display:
   busy_ack_detail: true
   background_process_notifications: all
 dashboard:
-  theme: default
+  theme: default-large
   show_token_analytics: false
   oauth:
     client_id: ''
     portal_url: ''
+  basic_auth:
+    username: ''
+    password_hash: ''
+    password: ''
+    secret: ''
+    session_ttl_seconds: 0
   public_url: ''
+  font: jetbrains-mono
 privacy:
   redact_pii: false
 tts:
@@ -317,6 +335,11 @@ tts:
   openai:
     model: gpt-4o-mini-tts
     voice: alloy
+  gemini:
+    model: gemini-2.5-flash-preview-tts
+    voice: Kore
+    audio_tags: false
+    persona_prompt_file: ''
   xai:
     voice_id: eve
     language: en
@@ -363,6 +386,7 @@ context:
 memory:
   memory_enabled: true
   user_profile_enabled: true
+  write_approval: false
   memory_char_limit: 2200
   user_char_limit: 1375
   provider: ''
@@ -391,6 +415,7 @@ skills:
   inline_shell: false
   inline_shell_timeout: 10
   guard_agent_created: false
+  write_approval: false
   creation_nudge_interval: 15
 curator:
   enabled: true
@@ -423,6 +448,20 @@ discord:
   server_actions: ''
   allow_any_attachment: false
   max_attachment_bytes: 33554432
+  voice_fx:
+    enabled: false
+    ambient_enabled: true
+    ambient_path: ''
+    ambient_gain: 0.18
+    duck_gain: 0.06
+    speech_gain: 1.0
+    ack_enabled: true
+    ack_phrases:
+    - Let me look into that.
+    - One moment.
+    - Checking on that now.
+    - Give me a sec.
+    - On it.
 whatsapp: {}
 telegram:
   reactions: false
@@ -445,6 +484,7 @@ approvals:
   destructive_slash_confirm: true
 command_allowlist:
 - hermes update (restarts gateway, kills running agents)
+- shell command via -c/-lc flag
 - script execution via -e/-c flag
 quick_commands: {}
 hooks: {}
@@ -521,9 +561,11 @@ onboarding:
   seen:
     tool_progress_prompt: true
     busy_input_prompt: true
+  profile_build: ask
 updates:
   pre_update_backup: false
   backup_keep: 5
+  non_interactive_local_changes: stash
 lsp:
   enabled: true
   wait_mode: document
