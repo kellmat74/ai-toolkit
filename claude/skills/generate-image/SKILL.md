@@ -19,6 +19,12 @@ models only" restriction, which governs the reasoning model, not outbound API ca
 **Cost:** $0.04 per image (Seedream 4.5, fixed). Each successful call bills once. A
 "no image" response may still have billed -- read the output before retrying.
 
+**Where images are saved:** to an `images/` folder at the root of the tree the
+current project sits in -- `~/git/work/images/` if cwd is under `~/git/work/`,
+otherwise `~/git/personal/images/`. These folders are shared across all projects in
+each tree and are not inside any git repo, so generated images aren't committed. Use
+`os.getcwd()` / `pwd -P` (resolves symlinks like `~/git/frontrunner`).
+
 ## Direct path (default)
 
 1. Use the user's description as the prompt verbatim. If it's a bare request ("a
@@ -67,7 +73,15 @@ if not url:
     print("NO IMAGE (may still be billed):", json.dumps(data)[:800]); raise SystemExit(1)
 
 ext = url.split("/", 1)[1].split(";", 1)[0] if url.startswith("data:image/") else "jpg"
-out = f"/tmp/claude_genimg_{int(time.time())}.{ext}"
+# Route to an images/ folder at the root of the personal or work tree, based on
+# which tree the current project sits in. Falls back to personal if neither.
+home = os.path.expanduser("~"); cwd = os.getcwd() + "/"
+if "/git/work/" in cwd:
+    imgdir = os.path.join(home, "git", "work", "images")
+else:
+    imgdir = os.path.join(home, "git", "personal", "images")
+os.makedirs(imgdir, exist_ok=True)
+out = os.path.join(imgdir, f"genimg_{int(time.time())}.{ext}")
 open(out, "wb").write(base64.b64decode(url.split(",", 1)[1]))
 print(f"SAVED:{out}  COST:${data.get('usage', {}).get('cost')}")
 PY
@@ -81,7 +95,8 @@ PY
      Preview immediately, which is what the user actually wants.
    - Also call `SendUserFile` (status `normal`, captioned with the prompt) so the
      file is attached to the conversation for later reference.
-   State the cost and path; note `/tmp` clears on reboot.
+   State the cost and the saved path (the image persists in the tree's `images/`
+   folder; no reboot cleanup to worry about).
 
 ## Hermes route (opt-in: async / scheduled / "do it through Hermes")
 
@@ -91,17 +106,22 @@ flushes output on completion (see the `driving-hermes` skill):
 
 ```bash
 REPO=~/git/personal/ai-toolkit
-OUT=/tmp/claude_genimg_$(date +%s).jpg
+case "$(pwd -P)/" in
+  */git/work/*) IMGDIR=~/git/work/images ;;
+  *)            IMGDIR=~/git/personal/images ;;
+esac
+mkdir -p "$IMGDIR"
+OUT="$IMGDIR/genimg_$(date +%s).jpg"
 hermes --cli --skills "$REPO/hermes/skills" -z "Use the seedream skill to generate \
 an image. Prompt: <PROMPT>. Save to exactly $OUT and print one final line: \
 SAVED:$OUT . Do not rename the file." 2>&1 | tee /tmp/hermes_genimg.log
 ```
 
-Then parse `SAVED:<path>`. Fallback if Hermes renamed it (trailing slash on `/tmp/`
-is required -- it's a symlink on macOS; use `-mmin`, not `-newermt "-5 minutes"`):
+Then parse `SAVED:<path>`. Fallback if Hermes renamed it (trailing slash on the dir
+is required -- `/tmp` is a symlink on macOS; use `-mmin`, not `-newermt "-5 min"`):
 
 ```bash
-find /tmp/ ~/ -maxdepth 1 \( -name "*.png" -o -name "*.jpg" -o -name "*.jpeg" \) \
+find "$IMGDIR/" /tmp/ ~/ -maxdepth 1 \( -name "*.png" -o -name "*.jpg" -o -name "*.jpeg" \) \
   -mmin -5 2>/dev/null -exec ls -t {} + | head -1
 ```
 
