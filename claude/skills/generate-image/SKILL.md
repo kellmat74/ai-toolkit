@@ -73,9 +73,15 @@ print(f"SAVED:{out}  COST:${data.get('usage', {}).get('cost')}")
 PY
 ```
 
-3. Parse `SAVED:<path>`, sanity-check with `file <path>` (expect "JPEG/PNG image
-   data" with dimensions), then `SendUserFile` it (status `normal`), captioned with
-   the prompt. State the cost and path; note `/tmp` clears on reboot.
+3. **Surface it.** Parse `SAVED:<path>` and sanity-check with `file <path>` (expect
+   "JPEG/PNG image data" with dimensions). Then make it visible:
+   - **`open <path>`** -- this is the reliable way on this surface. The Claude Code
+     Mac app does NOT render images inline in the transcript; it only shows
+     `SendUserFile` deliveries as clickable attachments. `open` pops the image in
+     Preview immediately, which is what the user actually wants.
+   - Also call `SendUserFile` (status `normal`, captioned with the prompt) so the
+     file is attached to the conversation for later reference.
+   State the cost and path; note `/tmp` clears on reboot.
 
 ## Hermes route (opt-in: async / scheduled / "do it through Hermes")
 
@@ -99,5 +105,6 @@ find /tmp/ ~/ -maxdepth 1 \( -name "*.png" -o -name "*.jpg" -o -name "*.jpeg" \)
   -mmin -5 2>/dev/null -exec ls -t {} + | head -1
 ```
 
-Surface the same way (step 3 above). Don't use `--yolo` (the auto-mode classifier
-blocks it; the shell/script allowlist already lets the seedream skill run).
+Surface the same way as the direct path (step 3 above: `open <path>` to show it in
+Preview, plus `SendUserFile`). Don't use `--yolo` (the auto-mode classifier blocks
+it; the shell/script allowlist already lets the seedream skill run).
