@@ -80,3 +80,5 @@ a file in that repo.
 
 Durable context for this project is in the Obsidian vault at `_ai/ai-toolkit/agent-architecture.md`.
 Check it at the start of any new session for agent roles, coordination patterns, GitHub access setup, and open design questions.
+
+Claude Code tooling config patterns: `_ai/workflow/claude-code-mcp-config.md` -- covers the CLI vs Mac app config split for stdio MCPs.
