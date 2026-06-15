@@ -5,19 +5,26 @@
   "mcpServers": {
     "github": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-github"
+      ],
       "env": {
         "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_PERSONAL_ACCESS_TOKEN}"
       }
     },
     "drawio": {
       "command": "npx",
-      "args": ["-y", "@drawio/mcp"]
+      "args": [
+        "-y",
+        "@drawio/mcp"
+      ]
     }
   },
   "skipDangerousModePermissionPrompt": true,
   "preferences": {
     "tmuxSplitPanes": true
   },
-  "agentPushNotifEnabled": true
+  "agentPushNotifEnabled": true,
+  "skipWorkflowUsageWarning": true
 }
