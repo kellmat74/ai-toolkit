@@ -16,3 +16,4 @@ venv/
 *.db-wal
 *.bak
 *.bak.*
+secrets.json
