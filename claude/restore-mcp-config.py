@@ -79,8 +79,8 @@ def main():
             }
         },
         "analytics-mcp": {
-            "command": "pipx",
-            "args": ["run", "analytics-mcp"],
+            "command": "/Users/matt.kelley/.local/bin/uvx",
+            "args": ["analytics-mcp"],
             "env": {
                 "GOOGLE_APPLICATION_CREDENTIALS": "/Users/matt.kelley/Documents/keys/ga4-mcp.json",
                 "GOOGLE_PROJECT_ID": "the-forge-498316"
