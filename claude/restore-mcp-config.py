@@ -77,6 +77,14 @@ def main():
             "env": {
                 "NOTION_TOKEN": secrets["notion_work"]
             }
+        },
+        "analytics-mcp": {
+            "command": "pipx",
+            "args": ["run", "analytics-mcp"],
+            "env": {
+                "GOOGLE_APPLICATION_CREDENTIALS": "/Users/matt.kelley/Documents/keys/ga4-mcp.json",
+                "GOOGLE_PROJECT_ID": "the-forge-498316"
+            }
         }
     }
 
