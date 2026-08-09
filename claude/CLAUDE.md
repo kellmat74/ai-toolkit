@@ -71,6 +71,32 @@ When you finish something tied to an issue, close it with a comment summarizing 
 - Before destructive ops (force push, hard reset, deleting branches), confirm.
 - For ambiguous tasks, ask 1-2 sharp clarifying questions before diving in.
 
+## Before automating a new login/scraping target
+When a new project needs to log into or scrape an unfamiliar site (payer
+portal, vendor dashboard, etc.), do a quick recon pass before writing any
+scraper code:
+- Check response headers/cookies on the login page for known bot-detection
+  signatures: a `CF-RAY` header means Cloudflare, `_abck` cookie means Akamai,
+  a bare 429 with no body means Kasada. Also scan the page source for inline
+  fingerprinting script calls (e.g. a subdomain like `rba.*` or `fp.*` loaded
+  on page load) -- a giveaway even without a matching header/cookie pattern.
+- If bot detection shows up, don't spend a session iterating on selectors to
+  fight it -- stealth patches only fix fingerprint-level signals
+  (`navigator.webdriver`, missing plugins), not IP reputation, TLS
+  fingerprinting, or behavioral analysis. Plan up front for a one-time manual
+  login (real browser, real human timing) that saves a reusable session
+  (Playwright `storage_state` or equivalent) instead of scripting login itself.
+- If nothing shows up, proceed with normal scripted login, but still expect
+  the first real attempt to reveal surprises -- 2FA variance between
+  otherwise-identical accounts, MFA methods that differ per account, lazy-
+  rendered content that beats `networkidle`. Budget time for it; don't assume
+  the first mapped flow generalizes to every account.
+
+Learned the hard way on `portal-access-verification` (SURG UHC scraper,
+2026-08-06): several rounds of otherwise-correct selector fixes went by
+before recognizing the real blocker was fraud detection, not a wrong
+selector. A five-minute header check up front would have caught it immediately.
+
 ## Portability
 Anything durable about how I work with agents should live in `~/git/personal/ai-toolkit`,
 not in conversation memory. If you discover a generalizable skill, propose adding it as
