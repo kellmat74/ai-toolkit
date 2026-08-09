@@ -97,6 +97,27 @@ Learned the hard way on `portal-access-verification` (SURG UHC scraper,
 before recognizing the real blocker was fraud detection, not a wrong
 selector. A five-minute header check up front would have caught it immediately.
 
+**Whenever a human is going to interact with the target live anyway (real
+credentials, MFA, a manual login step), use `playwright codegen` instead of
+writing selectors by hand and iterating on tracebacks.** It opens a real
+browser, and every click/fill the human does gets turned into working code
+automatically:
+```
+playwright codegen --target python -o /tmp/recording.py <url>
+```
+Have them do the whole thing in that one recording -- login, MFA, navigating
+to whatever needs to be scraped -- then read the generated file directly for
+real selectors instead of a debug-dump-and-patch loop. Still worth
+sanity-checking anything flaky (elements needing dismissal, hidden duplicate
+buttons, etc.) against what codegen recorded rather than copying it blindly,
+but it replaces nearly all of the trial-and-error.
+
+Learned the hard way on the same project's Cigna scraper (2026-08-08): spent
+a full session iterating selectors through login/MFA one traceback at a time
+before the user pointed out codegen would have recorded the entire flow in
+one pass. Reach for it from the start whenever a live human walkthrough is
+already required, not just as a fallback after manual debugging stalls.
+
 ## Portability
 Anything durable about how I work with agents should live in `~/git/personal/ai-toolkit`,
 not in conversation memory. If you discover a generalizable skill, propose adding it as
