@@ -483,9 +483,10 @@ approvals:
   mcp_reload_confirm: true
   destructive_slash_confirm: true
 command_allowlist:
-- hermes update (restarts gateway, kills running agents)
 - shell command via -c/-lc flag
+- hermes update (restarts gateway, kills running agents)
 - script execution via -e/-c flag
+- execute_code
 quick_commands: {}
 hooks: {}
 hooks_auto_accept: false

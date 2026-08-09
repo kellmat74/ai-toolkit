@@ -2,6 +2,17 @@
   "env": {
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
   },
+  "extraKnownMarketplaces": {
+    "cloudflare": {
+      "source": {
+        "source": "github",
+        "repo": "cloudflare/skills"
+      }
+    }
+  },
+  "skipDangerousModePermissionPrompt": true,
+  "skipWorkflowUsageWarning": true,
+  "agentPushNotifEnabled": true,
   "mcpServers": {
     "github": {
       "command": "npx",
@@ -21,10 +32,10 @@
       ]
     }
   },
-  "skipDangerousModePermissionPrompt": true,
   "preferences": {
     "tmuxSplitPanes": true
   },
-  "agentPushNotifEnabled": true,
-  "skipWorkflowUsageWarning": true
+  "enabledPlugins": {
+    "cloudflare@cloudflare": true
+  }
 }
