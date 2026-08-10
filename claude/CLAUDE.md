@@ -128,6 +128,13 @@ a file in that repo.
 Durable context for this project is in the Obsidian vault at `_ai/ai-toolkit/agent-architecture.md`.
 Check it at the start of any new session for agent roles, coordination patterns, GitHub access setup, and open design questions.
 
+That note also covers **what does and does not carry across the two Claude Code surfaces**
+(Mac app vs CLI). Short version: CLAUDE.md, settings.json, and skills are shared via
+symlink; **MCP servers are not**, and the CLI currently has none. A skill that calls an
+MCP tool may work in the app and silently fail in the CLI. It also flags an unresolved
+question about whether the Forge GCP project and a throwaway OAuth project are the same
+project, which must be checked before deleting either.
+
 Claude Code tooling config patterns: `_ai/workflow/claude-code-mcp-config.md` -- covers where MCP
 config actually lives per surface (`~/.claude.json` and `claude_desktop_config.json`, **never**
 `settings.json`), remote-server OAuth including the dynamic-client-registration failure and the
