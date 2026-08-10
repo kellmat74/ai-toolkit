@@ -128,4 +128,12 @@ a file in that repo.
 Durable context for this project is in the Obsidian vault at `_ai/ai-toolkit/agent-architecture.md`.
 Check it at the start of any new session for agent roles, coordination patterns, GitHub access setup, and open design questions.
 
-Claude Code tooling config patterns: `_ai/workflow/claude-code-mcp-config.md` -- covers the CLI vs Mac app config split for stdio MCPs.
+Claude Code tooling config patterns: `_ai/workflow/claude-code-mcp-config.md` -- covers where MCP
+config actually lives per surface (`~/.claude.json` and `claude_desktop_config.json`, **never**
+`settings.json`), remote-server OAuth including the dynamic-client-registration failure and the
+bring-your-own-client fix, Google Workspace access state for both accounts, and the Sheets API's
+inability to touch uploaded `.xlsx` files.
+
+**Read that note before touching any MCP or Google Sheets config.** Two separate multi-hour
+detours (2026-06-07, 2026-08-09) came from config that looked correct but was in a file
+Claude Code does not read. `claude mcp list` is the ground truth for whether a server exists.

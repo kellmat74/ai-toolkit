@@ -13,25 +13,6 @@
   "skipDangerousModePermissionPrompt": true,
   "skipWorkflowUsageWarning": true,
   "agentPushNotifEnabled": true,
-  "mcpServers": {
-    "github": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-github"
-      ],
-      "env": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_PERSONAL_ACCESS_TOKEN}"
-      }
-    },
-    "drawio": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@drawio/mcp"
-      ]
-    }
-  },
   "preferences": {
     "tmuxSplitPanes": true
   },
