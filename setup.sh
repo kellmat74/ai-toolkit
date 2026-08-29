@@ -26,6 +26,7 @@ for d in skills agents commands; do
   if [ -d "$REPO/claude/$d" ]; then
     for f in "$REPO/claude/$d"/*; do
       [ -e "$f" ] || continue
+      [ "$(basename "$f")" = "README.md" ] && continue
       ln -sfn "$f" "$HOME/.claude/$d/$(basename "$f")"
       echo "  linked ~/.claude/$d/$(basename "$f")"
     done
