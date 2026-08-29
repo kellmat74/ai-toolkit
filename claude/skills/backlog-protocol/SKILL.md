@@ -45,8 +45,8 @@ gh issue edit N --repo kellmat74/agent-backlog \
   --remove-label "status:ready" --add-label "status:in-progress"
 ```
 
-2. Post `Claimed by claude at <ISO timestamp>.` as a comment.
-3. Sync the kanban board (see below).
+2. Post `Claimed by claude at <ISO timestamp>.` as a comment. The kanban board
+   follows label changes automatically (see below).
 
 ## While working
 
@@ -82,11 +82,15 @@ gh issue close N --repo kellmat74/agent-backlog --reason "not planned" \
   --comment "Won't do: <reason>"
 ```
 
-## Kanban board sync (manual until automated)
+## Kanban board sync (automatic)
 
-The board is GitHub Project 2 ("AI Agent Team", user kellmat74). Auto-add puts new
-issues on it, but nothing syncs the label to the Status column - do it whenever you
-change a status label:
+The board is GitHub Project 2 ("AI Agent Team", user kellmat74). The
+`project-sync.yml` workflow in agent-backlog syncs the Status column automatically on
+every label change, close, or reopen (via the PROJECT_SYNC_TOKEN repo secret), and
+adds the issue to the board if auto-add missed it. You do NOT need to touch the board
+when working issues - just manage labels and close reasons.
+
+Manual fallback, only if the workflow is broken or a one-off resync is needed:
 
 ```bash
 # find the item id for issue N, then set its Status column

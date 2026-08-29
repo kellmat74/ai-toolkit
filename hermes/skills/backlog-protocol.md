@@ -1,7 +1,7 @@
 ---
 name: backlog-protocol
 description: Read and work the kellmat74/agent-backlog GitHub Issues queue. Covers claiming tasks, updating status labels, and closing with a structured handoff comment.
-version: 1.1.0
+version: 1.2.0
 author: kellmat74
 platforms: [macos]
 metadata:
@@ -133,11 +133,14 @@ gh issue close $ISSUE --repo kellmat74/agent-backlog \
 
 ---
 
-## Kanban board sync (manual until automated)
+## Kanban board sync (automatic)
 
 The queue also renders as GitHub Project 2 ("AI Agent Team", owner kellmat74).
-New issues are auto-added, but the Status column does NOT follow labels on its own.
-Whenever you change a status label, also move the board item:
+The `project-sync.yml` workflow in agent-backlog syncs the board's Status column
+automatically on every label change, close, or reopen. Do not touch the board when
+working issues - manage labels and close reasons only.
+
+Manual fallback, only if the workflow is broken or a one-off resync is needed:
 
 ```bash
 ITEM=$(gh project item-list 2 --owner kellmat74 --format json \
@@ -164,4 +167,4 @@ Re-derive with `gh project field-list 2 --owner kellmat74 --format json` if stal
 | Done | `gh issue close N --repo kellmat74/agent-backlog --comment "## Handoff ..."` |
 | Blocked | edit: remove `status:in-progress`, add `status:blocked` + comment |
 | Won't do | `gh issue close N --reason "not planned" --comment "Won't do: <reason>"` |
-| Board sync | `gh project item-edit` per the section above, every label change |
+| Board sync | automatic via project-sync.yml workflow; manual fallback above |
