@@ -1,7 +1,7 @@
 ---
 name: backlog-protocol
 description: Read and work the kellmat74/agent-backlog GitHub Issues queue. Covers claiming tasks, updating status labels, and closing with a structured handoff comment.
-version: 1.0.0
+version: 1.1.0
 author: kellmat74
 platforms: [macos]
 metadata:
@@ -121,6 +121,39 @@ gh issue comment $ISSUE \
 
 ---
 
+## Won't do
+
+There is no `status:wont-do` label. Close the issue as not planned with a one-line
+reason; the kanban board shows these in its Won't Do column:
+
+```bash
+gh issue close $ISSUE --repo kellmat74/agent-backlog \
+  --reason "not planned" --comment "Won't do: <reason>"
+```
+
+---
+
+## Kanban board sync (manual until automated)
+
+The queue also renders as GitHub Project 2 ("AI Agent Team", owner kellmat74).
+New issues are auto-added, but the Status column does NOT follow labels on its own.
+Whenever you change a status label, also move the board item:
+
+```bash
+ITEM=$(gh project item-list 2 --owner kellmat74 --format json \
+  | jq -r '.items[] | select(.content.number == '$ISSUE') | .id')
+gh project item-edit --id "$ITEM" \
+  --project-id PVT_kwHOAYPyRc4BaAgL \
+  --field-id PVTSSF_lAHOAYPyRc4BaAgLzhU7EvA \
+  --single-select-option-id <OPTION_ID>
+```
+
+Option IDs: Ready `d8c210fc`, In Progress `47fc9ee4`, Blocked `7a340442`,
+Needs Review `79552a0f`, Done `98236657`, Won't Do `6fb1e35c`, Todo `f75ad846`.
+Re-derive with `gh project field-list 2 --owner kellmat74 --format json` if stale.
+
+---
+
 ## Quick reference
 
 | Action | Command |
@@ -130,3 +163,5 @@ gh issue comment $ISSUE \
 | Claim | edit: remove `status:ready`, add `status:in-progress` |
 | Done | `gh issue close N --repo kellmat74/agent-backlog --comment "## Handoff ..."` |
 | Blocked | edit: remove `status:in-progress`, add `status:blocked` + comment |
+| Won't do | `gh issue close N --reason "not planned" --comment "Won't do: <reason>"` |
+| Board sync | `gh project item-edit` per the section above, every label change |
