@@ -23,5 +23,13 @@
     "env": {
       "NOTION_TOKEN": "__NOTION_WORK_TOKEN__"
     }
+  },
+  "analytics-mcp": {
+    "command": "~/.local/bin/uvx",
+    "args": ["analytics-mcp"],
+    "env": {
+      "GOOGLE_APPLICATION_CREDENTIALS": "~/Documents/keys/ga4-mcp.json",
+      "GOOGLE_PROJECT_ID": "the-forge-498316"
+    }
   }
 }

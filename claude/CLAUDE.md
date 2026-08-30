@@ -30,7 +30,13 @@ heavy tool-driven work. The Mac has to stay awake for the remote session to stay
 live (10-minute network outage timeout).
 
 Underlying mechanics (cwd, project CLAUDE.md, `~/.claude/`, symlinks from
-ai-toolkit) are identical to CLI. Only the UI differs.
+ai-toolkit) are identical to CLI. Stdio MCP servers are also identical on both
+surfaces: `claude/restore-mcp-config.py` renders them from one manifest
+(`claude/mcp-servers-template.json`) into both surfaces' config files, and
+setup.sh runs it. The one remaining difference: claude.ai connectors (Lucid,
+gws-mcp, Pulse, ...) need a one-time interactive OAuth per surface and may be
+missing on a surface where that hasn't been done. `claude mcp list` is ground
+truth.
 
 ## Memory and notes
 Long-form notes live in my personal Obsidian vault:

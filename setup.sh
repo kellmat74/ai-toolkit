@@ -45,6 +45,15 @@ if [ -d "$REPO/hermes/skills" ]; then
   done
 fi
 
+# ---------- MCP config (both surfaces) ----------
+# Renders claude/mcp-servers-template.json into the Mac app config AND the
+# CLI's ~/.claude.json. Needs gh auth + ~/.claude/secrets.json; skip if absent.
+if command -v gh >/dev/null && [ -f ~/.claude/secrets.json ]; then
+  python3 "$REPO/claude/restore-mcp-config.py" || echo "  WARN: MCP config render failed; run claude/restore-mcp-config.py manually"
+else
+  echo "  Skipped MCP config render (needs gh CLI auth + ~/.claude/secrets.json)"
+fi
+
 # ---------- Secrets check ----------
 echo ""
 missing=()
