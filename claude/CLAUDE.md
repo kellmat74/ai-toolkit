@@ -124,6 +124,15 @@ before the user pointed out codegen would have recorded the entire flow in
 one pass. Reach for it from the start whenever a live human walkthrough is
 already required, not just as a fallback after manual debugging stalls.
 
+## New app-shaped personal projects
+Start from the **buildermethods/build-new** template (Rails 8 + Inertia + React 19,
+Postgres-for-everything). I don't review code; agents do all coding. That makes these
+non-negotiable: run the review-code skill before any merge, security-audit before
+anything touching auth or payments ships, green CI is the merge bar, managed hosting
+(Render/Fly) over self-hosted. Full rationale and toolchain state:
+`_ai/personal/greenfield-stack.md` in the vault. Does not apply to howlers-peak
+(stays Supabase + Next.js) or data/infra work (stays Python).
+
 ## Portability
 Anything durable about how I work with agents should live in `~/git/personal/ai-toolkit`,
 not in conversation memory. If you discover a generalizable skill, propose adding it as
