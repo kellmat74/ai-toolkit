@@ -13,6 +13,12 @@
         "source": "github",
         "repo": "cloudflare/skills"
       }
+    },
+    "bm-skills": {
+      "source": {
+        "source": "github",
+        "repo": "buildermethods/bm-skills"
+      }
     }
   },
   "skipDangerousModePermissionPrompt": true,
@@ -22,6 +28,7 @@
     "tmuxSplitPanes": true
   },
   "enabledPlugins": {
-    "cloudflare@cloudflare": true
+    "cloudflare@cloudflare": true,
+    "bm-skills@bm-skills": true
   }
 }
