@@ -1,6 +1,6 @@
 ---
 name: new-app
-description: Start a new app-shaped personal project from the buildermethods/build-new template (Rails 8 + Inertia + React). Use when Matt says "new app", "new project", "start building X", or "spin up an app". Not for data pipelines, scrapers, or agent tooling (those stay Python), and not for howlers-peak.
+description: Start a new app-shaped PERSONAL project from the buildermethods/build-new template (Rails 8 + Inertia + React). Personal projects only; never for VisiQuate or other work projects. Use when Matt says "new app", "new project", "start building X", or "spin up an app" for a personal project. Not for data pipelines, scrapers, or agent tooling (those stay Python), and not for howlers-peak.
 ---
 
 # New App from build-new
@@ -10,6 +10,13 @@ no-human-review guardrails wired in from commit one. Standing decision and ratio
 `_ai/personal/greenfield-stack.md` in the vault.
 
 ## 0. Confirm scope
+
+This skill is for personal projects only. If the project is for VisiQuate or any
+other employer/client (work code, work data, work Salesforce or other systems), stop
+here: the personal GitHub repo, agent-only review, and `scope:personal` backlog
+assumptions below do not hold. Ask Matt which stack, repo, and review process the
+work project should use instead. If it is unclear whether the project is personal or
+work, ask before doing anything.
 
 App-shaped means a product with UI and users. If the request is a pipeline, scraper,
 script, or agent tool, this skill does not apply; use Python and stop here.
