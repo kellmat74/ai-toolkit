@@ -34,3 +34,18 @@ notes/         # pointers to the Obsidian vault (don't duplicate notes here)
 ## Backlog
 The team works from `kellmat74/agent-backlog` (GitHub Issues). See `backlog/README.md`
 for the routing/labeling conventions.
+
+## Local commit secret scanning
+
+The root [.pre-commit-config.yaml](.pre-commit-config.yaml) is a reusable blocking Gitleaks hook and is enabled for this repository after installation:
+
+```sh
+brew install gitleaks
+pip install pre-commit
+pre-commit install
+pre-commit run gitleaks --all-files
+```
+
+This hook always scans staged changes, including when invoked with `--all-files`. Findings and scanner errors block commits; matched values are redacted. Copy the hook into another project's existing `repos` list without replacing its other checks. Install the hook in each checkout and keep CI history scanning enabled. Repository hooks do not automatically protect every repository on the machine.
+
+The durable rationale, false-positive handling and verification recipe live in the vault at `Codex/ai-toolkit/Gitleaks Pre-Commit Pattern.md`; see [the vault pointer](notes/README.md). Contributor guidance is in [AGENTS.md](AGENTS.md).

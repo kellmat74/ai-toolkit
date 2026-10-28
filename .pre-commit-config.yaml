@@ -1,0 +1,11 @@
+# Reusable staged-secret gate. Merge this hook into an existing config; retain other hooks.
+# Setup: brew install gitleaks && pip install pre-commit && pre-commit install
+repos:
+  - repo: local
+    hooks:
+      - id: gitleaks
+        name: "Gitleaks staged-secret scan (blocking)"
+        entry: gitleaks git --staged --redact --no-banner
+        language: system
+        pass_filenames: false
+        always_run: true

@@ -133,6 +133,12 @@ anything touching auth or payments ships, green CI is the merge bar, managed hos
 `_ai/personal/greenfield-stack.md` in the vault. Does not apply to howlers-peak
 (stays Supabase + Next.js) or data/infra work (stays Python).
 
+## Local commit secret scanning
+
+Before each local commit, use the repository's blocking Gitleaks staged scan. The reusable hook is `ai-toolkit/.pre-commit-config.yaml`; when setting up a repository, merge it into the existing configuration, preserve other checks, install Gitleaks on PATH and run `pre-commit install` in that checkout. Run `pre-commit run gitleaks --all-files` to check the staged index. Findings or a missing scanner must block the commit; redact matched values and fix the cause instead of bypassing the hook. Keep tests in Git and ignore generated outputs. Local hooks complement CI history scanning and can be bypassed, so they are not a replacement for CI.
+
+Investigate false positives against actual source bytes before adding an exception. Prefer exact historical finding fingerprints and formats that distinguish checksums from credential assignments. Never exclude an entire document or test directory merely to silence a scan.
+
 ## Portability
 Anything durable about how I work with agents should live in `~/git/personal/ai-toolkit`,
 not in conversation memory. If you discover a generalizable skill, propose adding it as
@@ -159,3 +165,5 @@ inability to touch uploaded `.xlsx` files.
 **Read that note before touching any MCP or Google Sheets config.** Two separate multi-hour
 detours (2026-06-07, 2026-08-09) came from config that looked correct but was in a file
 Claude Code does not read. `claude mcp list` is the ground truth for whether a server exists.
+
+Reusable local commit security pattern: `Codex/ai-toolkit/Gitleaks Pre-Commit Pattern.md` in the vault. Covers setup, staged-only semantics, redaction, missing-scanner failure and narrow false-positive handling. The portable hook lives in this repository's root `.pre-commit-config.yaml`.

@@ -9,3 +9,9 @@ This directory is intentionally near-empty. Anything written here should be eith
 - A pointer to a vault note (with the path)
 - Toolkit-internal docs that don't belong in the vault (e.g. `notes/decisions/` for
   agent-architecture decisions worth committing alongside the code)
+
+## Gitleaks pre-commit pattern
+
+Vault note: `Codex/ai-toolkit/Gitleaks Pre-Commit Pattern.md` beneath the vault root above.
+
+Reusable implementation: [root pre-commit configuration](../.pre-commit-config.yaml). This repository retains the implementation and agent guidance; the explanatory note lives in the vault.
