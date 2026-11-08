@@ -84,8 +84,12 @@ Capture the transcript to a file:
   the process by PID (`gateway-exit-diag.log` in the logs dir records it).
 - Dashboard (port 9119): `hermes dashboard --no-open`, `hermes dashboard --status`,
   `hermes dashboard --stop`.
-- If you do want it persistent, `hermes gateway install` would add a service. Do not
-  run that without the user asking.
+- Discord is configured on this PC and the gateway is installed as a login item:
+  `hermes gateway install` fell back to the Startup folder
+  (`Startup\Hermes_Gateway.vbs`) because the UAC prompt was skipped. Check
+  `hermes gateway status`; remove with `hermes gateway uninstall`. Never run
+  `hermes gateway install` or `setup` without the user asking, and never read or print
+  tokens from `.env`.
 
 ## Approval gates
 
