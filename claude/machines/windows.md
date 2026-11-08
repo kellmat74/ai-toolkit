@@ -38,8 +38,14 @@ list` if a CLI is installed.
 Installed (v0.23.0 stable) at `%LOCALAPPDATA%\hermes`, with `hermes` on the User PATH. It runs
 on its own config and skills: `setup.ps1 -Hermes` has NOT been run, because the repo's Hermes
 config comes from an older Hermes (the Mac runs v0.16.0) and some skill names collide with the
-installer's own. No gateway Scheduled Task exists, and API keys are added by hand to
-`%LOCALAPPDATA%\hermes\.env`. Do not link the repo's Hermes config here without a plan.
+installer's own. API keys are added by hand to `%LOCALAPPDATA%\hermes\.env`. Do not link
+the repo's Hermes config here without a plan.
+
+Provider: OpenRouter. Discord is connected (own bot, gateway log shows it connecting). The
+gateway auto-starts at login through a Startup folder login item
+(`Startup\Hermes_Gateway.vbs`), NOT a Scheduled Task: `hermes gateway install` fell back
+to it because the UAC prompt was skipped. Remove it with `hermes gateway uninstall`. The
+Mac is not running Hermes at the moment, so this PC is the only Discord host.
 
 ## Not installed here
 Codex skills are skipped.
