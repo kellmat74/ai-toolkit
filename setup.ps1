@@ -121,6 +121,9 @@ foreach ($f in 'CLAUDE.md', 'settings.json', 'keybindings.json') {
     Link-Item (Join-Path $Repo "claude\$f") (Join-Path $ClaudeHome $f)
 }
 
+# Machine-specific instructions, imported by claude\CLAUDE.md as ~\.claude\machine.md.
+Link-Item (Join-Path $Repo 'claude\machines\windows.md') (Join-Path $ClaudeHome 'machine.md')
+
 foreach ($d in 'skills', 'agents', 'commands') {
     $srcDir = Join-Path $Repo "claude\$d"
     if (-not (Test-Path -LiteralPath $srcDir)) { continue }
