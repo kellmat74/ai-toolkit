@@ -1,6 +1,7 @@
 # Notes
 
-Durable notes live in the personal Obsidian vault, not here:
+Durable notes live in the personal Obsidian vault, not here. The root is the
+`VAULT_PATH` environment variable when set (per machine); the Mac default is:
 ```
 ~/Library/CloudStorage/GoogleDrive-kellmat74@gmail.com/My Drive/Obsidian-Personal/Obsidian Vault/
 ```

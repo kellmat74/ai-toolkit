@@ -1,0 +1,10 @@
+# Keep LF endings so bash scripts, skills and config behave the same on Mac and Windows.
+# Explicit extension list only. Do not add `* text=auto`: it would also touch any
+# binary-ish file (images, archives) that is added later.
+*.sh   text eol=lf
+*.py   text eol=lf
+*.md   text eol=lf
+*.json text eol=lf
+*.yaml text eol=lf
+*.yml  text eol=lf
+*.ps1  text eol=lf
