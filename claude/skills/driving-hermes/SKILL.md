@@ -19,6 +19,10 @@ the machine file (`~/.claude/machine.md`) says, and the per-OS sections below di
   because the shell var is unset. That is expected.
 - With no provider key configured, `hermes -z` cannot run an agent turn.
   `hermes status` shows "Providers: none connected" in that case. Check it first.
+- Verified on Windows (v0.23, OpenRouter key in `.env`): `hermes --cli -z "Reply with the
+  single word OK."` printed `OK`, exit 0, about 7s. A key line in `.env` that still starts
+  with `#` is ignored. When checking `.env`, never print its lines: the template's comment
+  lines can hold a pasted key. Use `hermes auth list` instead.
 
 ## Where things live
 
