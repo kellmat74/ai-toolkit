@@ -48,7 +48,11 @@ context, but durable knowledge belongs in the Obsidian vault or as a committed s
 
 ### Vault backpointer rule
 Whenever you create or update a vault note for a project, you MUST also add (or update)
-a `## Vault Note` section in that project's CLAUDE.md pointing to it. Format:
+a `## Reusable development feedback
+
+For new apps or substantial data/workflow changes, use the `development-lessons` skill and read the relevant vault checklist before choosing the design. Apply only lessons that match the task; old client rules and old release choices do not become universal requirements. Preserve the user's stack, current repository rules and authorization boundaries. Confirmed findings should become scoped prevention checks rather than blanket approval flows.
+
+## Vault Note` section in that project's CLAUDE.md pointing to it. Format:
 
 ```markdown
 ## Vault Note
@@ -167,3 +171,5 @@ detours (2026-06-07, 2026-08-09) came from config that looked correct but was in
 Claude Code does not read. `claude mcp list` is the ground truth for whether a server exists.
 
 Reusable local commit security pattern: `Codex/ai-toolkit/Gitleaks Pre-Commit Pattern.md` in the vault. Covers setup, staged-only semantics, redaction, missing-scanner failure and narrow false-positive handling. The portable hook lives in this repository's root `.pre-commit-config.yaml`.
+
+Development playbook: `Codex/ai-toolkit/Development Lessons and Review Playbook.md` in the vault. Evidence and source coverage: `Development Feedback Register.md` and `Conversation Review Coverage.md` in the same folder. The skill's canonical source is `codex/skills/development-lessons/SKILL.md`; toolkit setup installs it for Codex and exposes the same skill through Claude/Hermes links. These files preserve reusable lessons with historical/current confidence labels; they do not claim complete access to every conversation.

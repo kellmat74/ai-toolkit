@@ -1,0 +1,4 @@
+interface:
+  display_name: "Development Lessons"
+  short_description: "Apply source-linked lessons to new app development"
+  default_prompt: "Use $development-lessons to identify prior findings relevant to this app and turn them into focused acceptance checks."

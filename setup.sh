@@ -7,6 +7,9 @@ set -euo pipefail
 REPO="$(cd "$(dirname "$0")" && pwd)"
 echo "Wiring ai-toolkit from: $REPO"
 
+# ---------- Codex ----------
+"$REPO/codex/install-skills.sh"
+
 # ---------- Claude Code ----------
 mkdir -p ~/.claude/{skills,agents,commands}
 

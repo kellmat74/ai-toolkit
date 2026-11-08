@@ -1,11 +1,16 @@
 {
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
   "statusLine": {
     "type": "command",
     "command": "npx -y ccusage@20.0.20 statusline",
     "padding": 0
   },
-  "env": {
-    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  "enabledPlugins": {
+    "cloudflare@cloudflare": true,
+    "bm-skills@bm-skills": true,
+    "postman@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "cloudflare": {
@@ -26,9 +31,5 @@
   "agentPushNotifEnabled": true,
   "preferences": {
     "tmuxSplitPanes": true
-  },
-  "enabledPlugins": {
-    "cloudflare@cloudflare": true,
-    "bm-skills@bm-skills": true
   }
 }

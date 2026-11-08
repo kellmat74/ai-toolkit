@@ -19,6 +19,7 @@ Should be enough to bring the full team back online.
 
 ## Layout
 ```
+codex/         # Codex skills and a non-overwriting skill-link installer
 claude/        # Claude Code: CLAUDE.md, settings.json, skills/, agents/, commands/
 hermes/        # Hermes Agent: config.yaml, skills/
 backlog/       # markdown-based backlog (fallback; GitHub Issues is primary - see backlog/README.md)
@@ -49,3 +50,9 @@ pre-commit run gitleaks --all-files
 This hook always scans staged changes, including when invoked with `--all-files`. Findings and scanner errors block commits; matched values are redacted. Copy the hook into another project's existing `repos` list without replacing its other checks. Install the hook in each checkout and keep CI history scanning enabled. Repository hooks do not automatically protect every repository on the machine.
 
 The durable rationale, false-positive handling and verification recipe live in the vault at `Codex/ai-toolkit/Gitleaks Pre-Commit Pattern.md`; see [the vault pointer](notes/README.md). Contributor guidance is in [AGENTS.md](AGENTS.md).
+
+## Development lessons across projects
+
+The [development-lessons skill](codex/skills/development-lessons/SKILL.md) retrieves the vault playbook for new apps and substantial workflow/data changes. It selects applicable lessons instead of imposing one architecture on every project. The feedback register distinguishes current verified fixes from historical reports and includes source locators, prevention checks and coverage limits. See [the vault pointers](notes/README.md).
+
+`./setup.sh` installs toolkit Codex skills and the existing Claude/Hermes skill links. For Codex-only setup, run `./codex/install-skills.sh`; its optional first argument chooses a destination directory. It leaves conflicting existing installations unchanged and returns a failure so they can be reviewed. The same canonical skill is shared with Claude and Hermes. Start a new session or refresh skill discovery if an already-running app has not picked it up. This adds knowledge retrieval, not an automatic exhaustive audit or a guarantee that an AI will load every lesson for every task.
