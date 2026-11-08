@@ -25,6 +25,12 @@ link_if_exists "$REPO/claude/CLAUDE.md"        ~/.claude/CLAUDE.md
 link_if_exists "$REPO/claude/settings.json"    ~/.claude/settings.json
 link_if_exists "$REPO/claude/keybindings.json" ~/.claude/keybindings.json
 
+# Machine-specific instructions, imported by claude/CLAUDE.md as ~/.claude/machine.md.
+# Only macOS has a machine file today; other systems get none (the import is then a no-op).
+case "$(uname -s)" in
+  Darwin) link_if_exists "$REPO/claude/machines/mac.md" ~/.claude/machine.md ;;
+esac
+
 for d in skills agents commands; do
   if [ -d "$REPO/claude/$d" ]; then
     for f in "$REPO/claude/$d"/*; do
