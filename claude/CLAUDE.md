@@ -48,11 +48,7 @@ context, but durable knowledge belongs in the Obsidian vault or as a committed s
 
 ### Vault backpointer rule
 Whenever you create or update a vault note for a project, you MUST also add (or update)
-a `## Reusable development feedback
-
-For new apps or substantial data/workflow changes, use the `development-lessons` skill and read the relevant vault checklist before choosing the design. Apply only lessons that match the task; old client rules and old release choices do not become universal requirements. Preserve the user's stack, current repository rules and authorization boundaries. Confirmed findings should become scoped prevention checks rather than blanket approval flows.
-
-## Vault Note` section in that project's CLAUDE.md pointing to it. Format:
+a `## Vault Note` section in that project's CLAUDE.md pointing to it. Format:
 
 ```markdown
 ## Vault Note
@@ -136,6 +132,10 @@ anything touching auth or payments ships, green CI is the merge bar, managed hos
 (Render/Fly) over self-hosted. Full rationale and toolchain state:
 `_ai/personal/greenfield-stack.md` in the vault. Does not apply to howlers-peak
 (stays Supabase + Next.js) or data/infra work (stays Python).
+
+## Reusable development feedback
+
+For new apps or substantial data/workflow changes, use the `development-lessons` skill and read the relevant vault checklist before choosing the design. Apply only lessons that match the task; old client rules and old release choices do not become universal requirements. Preserve the user's stack, current repository rules and authorization boundaries. Confirmed findings should become scoped prevention checks rather than blanket approval flows.
 
 ## Local commit secret scanning
 
