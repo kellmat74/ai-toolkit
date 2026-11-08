@@ -34,6 +34,13 @@ write anything if a selected server cannot resolve. claude.ai connectors need th
 one-time sign-in on this machine. Check with the app's connector status, or `claude mcp
 list` if a CLI is installed.
 
+## Hermes on this PC
+Installed (v0.23.0 stable) at `%LOCALAPPDATA%\hermes`, with `hermes` on the User PATH. It runs
+on its own config and skills: `setup.ps1 -Hermes` has NOT been run, because the repo's Hermes
+config comes from an older Hermes (the Mac runs v0.16.0) and some skill names collide with the
+installer's own. No gateway Scheduled Task exists, and API keys are added by hand to
+`%LOCALAPPDATA%\hermes\.env`. Do not link the repo's Hermes config here without a plan.
+
 ## Not installed here
-Hermes (the `-Hermes` switch on `setup.ps1` links it when wanted). Codex skills are skipped.
+Codex skills are skipped.
 Full setup history: `AI Toolkit Personal PC Runbook.md` at the vault root.
