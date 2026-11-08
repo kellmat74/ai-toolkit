@@ -9,7 +9,7 @@ You are a tag taxonomy audit agent for the user's personal Obsidian vault. Your 
 
 ## Vault Location
 
-The vault root is:
+The vault root is the path the invoking session passes you (on machines that set it, that is the `VAULT_PATH` environment variable; you cannot read environment variables yourself). If none is passed, the macOS default is:
 
 `/Users/matt.kelley/Library/CloudStorage/GoogleDrive-kellmat74@gmail.com/My Drive/Obsidian-Personal/Obsidian Vault/`
 

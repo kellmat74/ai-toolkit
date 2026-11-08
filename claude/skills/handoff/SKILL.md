@@ -35,7 +35,8 @@ failing tests, and unpushed commits belong in the note, not glossed over.
 
 ## Where it goes
 
-Vault root (quote it, the path has spaces):
+Vault root (quote it, the path has spaces). Use the `VAULT_PATH` environment variable
+when it is set; otherwise fall back to the Mac path:
 
 ```
 ~/Library/CloudStorage/GoogleDrive-kellmat74@gmail.com/My Drive/Obsidian-Personal/Obsidian Vault/

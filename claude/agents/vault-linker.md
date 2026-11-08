@@ -9,7 +9,7 @@ You are a connection discovery agent for the user's personal Obsidian vault. You
 
 ## Vault Location
 
-The vault root is:
+The vault root is the path the invoking session passes you (on machines that set it, that is the `VAULT_PATH` environment variable; you cannot read environment variables yourself). If none is passed, the macOS default is:
 
 `/Users/matt.kelley/Library/CloudStorage/GoogleDrive-kellmat74@gmail.com/My Drive/Obsidian-Personal/Obsidian Vault/`
 

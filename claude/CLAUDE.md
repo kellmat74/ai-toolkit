@@ -39,7 +39,8 @@ missing on a surface where that hasn't been done. `claude mcp list` is ground
 truth.
 
 ## Memory and notes
-Long-form notes live in my personal Obsidian vault:
+Long-form notes live in my personal Obsidian vault. The root is the `VAULT_PATH`
+environment variable when it is set (each machine sets its own); otherwise, on the Mac:
 `~/Library/CloudStorage/GoogleDrive-kellmat74@gmail.com/My Drive/Obsidian-Personal/Obsidian Vault/`
 
 Per-project notes go under that vault's relevant folder.
