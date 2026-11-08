@@ -78,10 +78,14 @@ Capture the transcript to a file:
   `gateway run --quiet --idle-exit` (log: "Auto-started gateway: exits after 600s with
   no clients, adapters, cron/kanban work"). It shows as "manual run", not a service.
   That is expected and not a stray process. No Scheduled Task is created.
-- Check: `hermes gateway status`. `hermes gateway stop` is documented as stopping the
-  *service*; whether it also stops a manual or auto-started run is UNVERIFIED on
-  Windows. After running it, confirm with `hermes gateway status` and, if needed, stop
-  the process by PID (`gateway-exit-diag.log` in the logs dir records it).
+- Check: `hermes gateway status`. `hermes gateway restart` is verified on Windows: it
+  drains the running gateway and respawns it, and Discord reconnects within seconds (use
+  it after any `hermes config set`). `hermes gateway stop` stopping a manual run is
+  UNVERIFIED; confirm with `hermes gateway status` and, if needed, stop by PID
+  (`gateway-exit-diag.log` in the logs dir records it).
+- Model changes: `hermes config set model.default <id>` (and `model.provider`), then
+  restart the gateway. The dashboard chat's model picker is per-session and is not in
+  `config.yaml`, so a model error there can differ from the Discord bot's.
 - Dashboard (port 9119): `hermes dashboard --no-open`, `hermes dashboard --status`,
   `hermes dashboard --stop`.
 - Discord is configured on this PC and the gateway is installed as a login item:
