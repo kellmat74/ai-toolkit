@@ -41,7 +41,13 @@ config comes from an older Hermes (the Mac runs v0.16.0) and some skill names co
 installer's own. API keys are added by hand to `%LOCALAPPDATA%\hermes\.env`. Do not link
 the repo's Hermes config here without a plan.
 
-Provider: OpenRouter. Discord is connected (own bot, gateway log shows it connecting). The
+Provider: OpenRouter, on FREE models by choice (set with `hermes config set`, the Windows
+config is not linked to the repo): main `nvidia/nemotron-3-ultra-550b-a55b:free`, auxiliary
+`openrouter/free`, `auxiliary.free_only: true`. Free slugs get retired (the Nemotron Super
+free slug was); when a 404 "unavailable for free" appears, pick a new one from
+`https://openrouter.ai/api/v1/models` (pricing 0, supports tools). Free routes may log
+prompts, so no private data. Backup of the earlier config: `config.yaml.bak-before-free-models`.
+Discord is connected (own bot, gateway log shows it connecting). The
 gateway auto-starts at login through a Startup folder login item
 (`Startup\Hermes_Gateway.vbs`), NOT a Scheduled Task: `hermes gateway install` fell back
 to it because the UAC prompt was skipped. Remove it with `hermes gateway uninstall`. The
