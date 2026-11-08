@@ -1,5 +1,6 @@
 # Keep LF endings so bash scripts, skills and config behave the same on Mac and Windows.
-* text=auto
+# Explicit extension list only. Do not add `* text=auto`: it would also touch any
+# binary-ish file (images, archives) that is added later.
 *.sh   text eol=lf
 *.py   text eol=lf
 *.md   text eol=lf

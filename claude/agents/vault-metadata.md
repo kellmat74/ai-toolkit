@@ -9,7 +9,7 @@ You are a metadata audit agent for the user's personal Obsidian vault. Your job 
 
 ## Vault Location
 
-The vault root is the path the invoking session passes you (on machines that set it, that is the `VAULT_PATH` environment variable; you cannot read environment variables yourself). If none is passed, the macOS default is:
+Use the vault root supplied in the prompt (the invoking session gets it from the `VAULT_PATH` environment variable, which you cannot read yourself). If none is supplied, use this macOS default. Never stop to ask for a path:
 
 `/Users/matt.kelley/Library/CloudStorage/GoogleDrive-kellmat74@gmail.com/My Drive/Obsidian-Personal/Obsidian Vault/`
 

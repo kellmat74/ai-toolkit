@@ -89,6 +89,30 @@ function Link-Item([string]$Source, [string]$Dest) {
     }
 }
 
+# ---------- Committed symlinks must be real links ----------
+# git writes a tracked symlink as a small text file when core.symlinks is false
+# (the Windows default), which silently breaks the skill that points through it.
+$brokenTracked = @()
+if (Get-Command git -ErrorAction SilentlyContinue) {
+    foreach ($line in (git -C $Repo ls-files -s)) {
+        if ($line -match '^120000\s+\S+\s+\d+\s+(.+)$') {
+            $rel = $Matches[1]
+            $item = Get-Item -LiteralPath (Join-Path $Repo $rel) -Force -ErrorAction SilentlyContinue
+            if ($null -eq $item -or $item.LinkType -ne 'SymbolicLink') { $brokenTracked += $rel }
+        }
+    }
+}
+else {
+    Write-Host '  note: git not found, skipping the tracked-symlink check' -ForegroundColor Yellow
+}
+if ($brokenTracked.Count -gt 0) {
+    Write-Host "`nERROR: these tracked symlinks are not real links in this checkout:" -ForegroundColor Red
+    $brokenTracked | ForEach-Object { Write-Host "  - $_" -ForegroundColor Red }
+    Write-Host 'Fix: git config core.symlinks true, then delete each file above and run' -ForegroundColor Red
+    Write-Host '     git checkout -- <path>   (Developer Mode must be on). Nothing was linked.' -ForegroundColor Red
+    exit 1
+}
+
 # ---------- Claude Code ----------
 Write-Host "`n[Claude Code] -> $ClaudeHome"
 foreach ($d in 'skills', 'agents', 'commands') { Ensure-Dir (Join-Path $ClaudeHome $d) }

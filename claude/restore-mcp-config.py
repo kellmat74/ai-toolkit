@@ -9,8 +9,12 @@ resolved at render time, so no secret ever lives in the repo:
   __NOTION_WORK_TOKEN__      <- ~/.claude/secrets.json  ("notion_work")
 Leading `~` in commands/args/env values expands to the local home directory.
 
-A server whose placeholders cannot be resolved (for example no notion_work key
-on a personal machine) is SKIPPED with a printed note, not a crash.
+STRICT BY DEFAULT. This script replaces the whole mcpServers block, so a partial
+render would silently drop servers. Therefore:
+  - Every server in the selected set must resolve. If any secret or token is
+    missing, the script prints each problem, writes NOTHING and exits 1.
+  - A server is left out only when you ask: --skip NAME or --only NAME,NAME.
+  - Writes are all or nothing.
 
 Targets (both machine-local, never committed):
   macOS app:   ~/Library/Application Support/Claude/claude_desktop_config.json
@@ -21,8 +25,9 @@ Targets (both machine-local, never committed):
 
 Windows notes: `npx` is a .cmd shim that desktop apps often fail to spawn
 directly, so npx servers are written as `cmd /c npx ...` (use --no-cmd-wrap to
-disable). A Unix-only `~/.local/bin/<tool>` command is rewritten to the bare
-tool name so it resolves from PATH.
+disable). This wrapper works; plain `npx` was never tested on Windows. A
+Unix-only `~/.local/bin/<tool>` command is rewritten to the bare tool name so it
+resolves from PATH.
 
 claude.ai connectors (Lucid, gws-mcp, Pulse, ...) are NOT covered: those are
 OAuth'd interactively per surface and cannot be scripted.
@@ -37,6 +42,9 @@ Usage:
   python restore-mcp-config.py --only github,drawio
   python restore-mcp-config.py --skip notion-work
   python restore-mcp-config.py --dry-run          # show plan, write nothing
+
+Exit codes: 0 ok, 1 nothing written because a selected server could not be
+resolved (or the selection was empty or named an unknown server).
 """
 
 import json
@@ -52,6 +60,19 @@ CLI_CONFIG_PATH = os.path.expanduser("~/.claude.json")
 SECRETS_PATH = os.path.expanduser("~/.claude/secrets.json")
 PLACEHOLDER_RE = re.compile(r"__[A-Z0-9_]+__")
 IS_WINDOWS = sys.platform == "win32"
+
+SECRET_KEYS = {
+    "__NOTION_PERSONAL_TOKEN__": "notion_personal",
+    "__NOTION_WORK_TOKEN__": "notion_work",
+}
+
+
+class RenderError(Exception):
+    """Raised when the selected servers cannot all be resolved."""
+
+    def __init__(self, problems):
+        super().__init__("; ".join(problems))
+        self.problems = problems
 
 
 def app_config_path():
@@ -69,12 +90,14 @@ APP_CONFIG_PATH = app_config_path()
 
 
 def load_secrets():
-    """Return the secrets dict, or {} if the file is absent."""
+    """Return (secrets dict, error string or None)."""
     if not os.path.exists(SECRETS_PATH):
-        print(f"note: no secrets file at {SECRETS_PATH}; servers needing secrets are skipped")
-        return {}
-    with open(SECRETS_PATH) as f:
-        return json.load(f)
+        return {}, f"secrets file not found at {SECRETS_PATH}"
+    try:
+        with open(SECRETS_PATH) as f:
+            return json.load(f), None
+    except Exception as e:
+        return {}, f"could not read {SECRETS_PATH}: {e}"
 
 
 def get_gh_token():
@@ -140,6 +163,10 @@ def parse_list_flag(argv, flag):
 
 
 def render_servers(argv):
+    """Return (servers, skipped). Raise RenderError listing every problem.
+
+    `skipped` only ever holds servers the caller excluded with --skip.
+    """
     with open(MANIFEST_PATH) as f:
         manifest = json.load(f)
 
@@ -147,34 +174,54 @@ def render_servers(argv):
     skip = parse_list_flag(argv, "--skip") or set()
     wrap_npx = "--no-cmd-wrap" not in argv
 
-    secrets = load_secrets()
-    available = {}
-    gh = get_gh_token()
-    if gh:
-        available["__GH_TOKEN__"] = gh
-    if secrets.get("notion_personal"):
-        available["__NOTION_PERSONAL_TOKEN__"] = secrets["notion_personal"]
-    if secrets.get("notion_work"):
-        available["__NOTION_WORK_TOKEN__"] = secrets["notion_work"]
+    problems = []
+    for flag, names in (("--only", only or set()), ("--skip", skip)):
+        for name in sorted(names - set(manifest)):
+            problems.append(f"{flag} names unknown server '{name}'")
 
-    servers, skipped = {}, []
-    for name, entry in manifest.items():
+    selected, skipped = [], []
+    for name in manifest:
         if only is not None and name not in only:
             continue
         if name in skip:
             skipped.append((name, "excluded by --skip"))
             continue
-        missing = placeholders_in(entry) - set(available)
-        if missing:
-            skipped.append((name, "missing " + ", ".join(sorted(missing))))
-            continue
-        servers[name] = adapt_for_platform(resolve(entry, available), wrap_npx)
+        selected.append(name)
 
-    if only is not None:
-        unknown = only - set(manifest)
-        for name in sorted(unknown):
-            skipped.append((name, "not in manifest"))
+    if not selected and not problems:
+        problems.append("no servers selected")
 
+    needed = set()
+    for name in selected:
+        needed |= placeholders_in(manifest[name])
+
+    available = {}
+    if "__GH_TOKEN__" in needed:
+        token = get_gh_token()
+        if token:
+            available["__GH_TOKEN__"] = token
+    secrets, secrets_error = ({}, None)
+    if needed & set(SECRET_KEYS):
+        secrets, secrets_error = load_secrets()
+        for placeholder, key in SECRET_KEYS.items():
+            if secrets.get(key):
+                available[placeholder] = secrets[key]
+
+    for name in selected:
+        for placeholder in sorted(placeholders_in(manifest[name]) - set(available)):
+            if placeholder == "__GH_TOKEN__":
+                why = "`gh auth token` returned nothing (is gh installed and logged in?)"
+            else:
+                why = secrets_error or f"key '{SECRET_KEYS.get(placeholder, placeholder)}' missing from {SECRETS_PATH}"
+            problems.append(f"{name}: {why}")
+
+    if problems:
+        raise RenderError(problems)
+
+    servers = {
+        name: adapt_for_platform(resolve(manifest[name], available), wrap_npx)
+        for name in selected
+    }
     return servers, skipped
 
 
@@ -204,12 +251,12 @@ def main():
     do_cli = "--app-only" not in args
     dry_run = "--dry-run" in args
 
-    servers, skipped = render_servers(argv)
-
-    if not servers:
-        print("ERROR: no servers to write (everything skipped or filtered out).")
-        for name, why in skipped:
-            print(f"  skipped {name}: {why}")
+    try:
+        servers, skipped = render_servers(argv)
+    except RenderError as e:
+        print("ERROR: nothing was written. Fix these first, or exclude the server with --skip or --only:")
+        for problem in e.problems:
+            print(f"  - {problem}")
         sys.exit(1)
 
     app_label = {"darwin": "Mac app", "win32": "Windows app"}.get(sys.platform, "App")
