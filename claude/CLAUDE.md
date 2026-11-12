@@ -114,9 +114,9 @@ inability to touch uploaded `.xlsx` files.
 detours (2026-06-07, 2026-08-09) came from config that looked correct but was in a file
 Claude Code does not read. `claude mcp list` is the ground truth for whether a server exists.
 
-Reusable local commit security pattern: `Codex/ai-toolkit/Gitleaks Pre-Commit Pattern.md` in the vault. Covers setup, staged-only semantics, redaction, missing-scanner failure and narrow false-positive handling. The portable hook lives in this repository's root `.pre-commit-config.yaml`.
+Reusable local commit security pattern: `_ai/ai-toolkit/Gitleaks Pre-Commit Pattern.md` in the vault. Covers setup, staged-only semantics, redaction, missing-scanner failure and narrow false-positive handling. The portable hook lives in this repository's root `.pre-commit-config.yaml`.
 
-Development playbook: `Codex/ai-toolkit/Development Lessons and Review Playbook.md` in the vault. Evidence and source coverage: `Development Feedback Register.md` and `Conversation Review Coverage.md` in the same folder. The skill's canonical source is `codex/skills/development-lessons/SKILL.md`; toolkit setup installs it for Codex and exposes the same skill through Claude/Hermes links. These files preserve reusable lessons with historical/current confidence labels; they do not claim complete access to every conversation.
+Development playbook: `_ai/ai-toolkit/Development Lessons and Review Playbook.md` in the vault. Evidence and source coverage: `Development Feedback Register.md` and `Conversation Review Coverage.md` in the same folder. The skill's canonical source is `codex/skills/development-lessons/SKILL.md`; toolkit setup installs it for Codex and exposes the same skill through Claude/Hermes links. These files preserve reusable lessons with historical/current confidence labels; they do not claim complete access to every conversation.
 
 ## Machine-specific instructions
 @~/.claude/machine.md

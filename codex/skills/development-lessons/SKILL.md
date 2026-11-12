@@ -5,7 +5,7 @@ description: Apply Matt's source-linked development lessons when starting an app
 
 # Development lessons
 
-The durable source is the Obsidian vault folder `Codex/ai-toolkit/`. The vault root is the `VAULT_PATH` environment variable when set (per machine). On Matt's Mac the default full path is `~/Library/CloudStorage/GoogleDrive-kellmat74@gmail.com/My Drive/Obsidian-Personal/Obsidian Vault/Codex/ai-toolkit/`. The toolkit's `notes/README.md` is the backpointer.
+The durable source is the Obsidian vault folder `_ai/ai-toolkit/`. The vault root is the `VAULT_PATH` environment variable when set (per machine). On Matt's Mac the default full path is `~/Library/CloudStorage/GoogleDrive-kellmat74@gmail.com/My Drive/Obsidian-Personal/Obsidian Vault/_ai/ai-toolkit/`. The toolkit's `notes/README.md` is the backpointer.
 
 Start with **Development Lessons and Review Playbook.md**. Read **Development Feedback Register.md** only for the IDs relevant to the current design. **Conversation Review Coverage.md** records source thread titles/IDs, historical evidence, review boundaries and gaps.
 

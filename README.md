@@ -49,7 +49,7 @@ pre-commit run gitleaks --all-files
 
 This hook always scans staged changes, including when invoked with `--all-files`. Findings and scanner errors block commits; matched values are redacted. Copy the hook into another project's existing `repos` list without replacing its other checks. Install the hook in each checkout and keep CI history scanning enabled. Repository hooks do not automatically protect every repository on the machine.
 
-The durable rationale, false-positive handling and verification recipe live in the vault at `Codex/ai-toolkit/Gitleaks Pre-Commit Pattern.md`; see [the vault pointer](notes/README.md). Contributor guidance is in [AGENTS.md](AGENTS.md).
+The durable rationale, false-positive handling and verification recipe live in the vault at `_ai/ai-toolkit/Gitleaks Pre-Commit Pattern.md`; see [the vault pointer](notes/README.md). Contributor guidance is in [AGENTS.md](AGENTS.md).
 
 ## Development lessons across projects
 

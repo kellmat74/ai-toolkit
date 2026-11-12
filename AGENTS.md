@@ -14,8 +14,8 @@ For new apps or substantial data/workflow changes, use the `development-lessons`
 
 ## Vault Note
 
-The reusable setup and verification procedure is in the Obsidian vault at `Codex/ai-toolkit/Gitleaks Pre-Commit Pattern.md`. The vault root and pointer are documented in `notes/README.md`.
+The reusable setup and verification procedure is in the Obsidian vault at `_ai/ai-toolkit/Gitleaks Pre-Commit Pattern.md`. The vault root and pointer are documented in `notes/README.md`.
 
 Leave commits local unless Matt asks you to push. Do not include unrelated changes in a commit.
 
-Development playbook: `Codex/ai-toolkit/Development Lessons and Review Playbook.md` in the vault. Evidence and source coverage: `Development Feedback Register.md` and `Conversation Review Coverage.md` in the same folder. The skill's canonical source is `codex/skills/development-lessons/SKILL.md`; toolkit setup installs it for Codex and exposes the same skill through Claude/Hermes links. These files preserve reusable lessons with historical/current confidence labels; they do not claim complete access to every conversation.
+Development playbook: `_ai/ai-toolkit/Development Lessons and Review Playbook.md` in the vault. Evidence and source coverage: `Development Feedback Register.md` and `Conversation Review Coverage.md` in the same folder. The skill's canonical source is `codex/skills/development-lessons/SKILL.md`; toolkit setup installs it for Codex and exposes the same skill through Claude/Hermes links. These files preserve reusable lessons with historical/current confidence labels; they do not claim complete access to every conversation.

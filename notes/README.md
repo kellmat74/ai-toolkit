@@ -13,13 +13,13 @@ This directory is intentionally near-empty. Anything written here should be eith
 
 ## Gitleaks pre-commit pattern
 
-Vault note: `Codex/ai-toolkit/Gitleaks Pre-Commit Pattern.md` beneath the vault root above.
+Vault note: `_ai/ai-toolkit/Gitleaks Pre-Commit Pattern.md` beneath the vault root above.
 
 Reusable implementation: [root pre-commit configuration](../.pre-commit-config.yaml). This repository retains the implementation and agent guidance; the explanatory note lives in the vault.
 
 ## Reusable development lessons
 
-Vault notes under `Codex/ai-toolkit/`:
+Vault notes under `_ai/ai-toolkit/`:
 
 - `Development Lessons and Review Playbook.md`: applicability-aware checklist for new apps and substantial changes.
 - `Development Feedback Register.md`: stable lesson IDs, evidence, prevention checks and historical/current confidence.
